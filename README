@@ -1,0 +1,55 @@
+NAME
+    GraphViz::ISA - Graphing @ISA hierarchies at run-time
+
+SYNOPSIS
+      use GraphViz::ISA;
+      my $p = Some::Class->new;
+
+      my $g1 = GraphViz::ISA->new($p);
+      print $g1->as_png;
+
+      my $g2 = GraphViz::ISA->new('Some::Other::Module');
+      print $g2->as_png;
+
+DESCRIPTION
+    This class constructs a graph showing the `@ISA' hierarchy (note: not
+    object hierarchies) from a package name or a blessed scalar.
+
+METHODS
+    The following methods are defined by this class; all other method calls
+    are passed to the underlying GraphViz object:
+
+    new()
+        This constructs the object itself and takes a parameter. The
+        parameter can be either a package name or a scalar blessed into a
+        package. It then calls `isatree()' and hands the result to
+        `graph()'. Then it returns the newly constructed object.
+
+    isatree()
+        Takes a package name as a parameter and traverses the indicated
+        package's `@ISA' recursively, constructing a hash of hashes. If a
+        package's `@ISA' is empty, it has an empty hashref as the value in
+        the tree.
+
+    graph()
+        Takes a tree previously constructed by `isatree()' and traverses it,
+        creating nodes and edges as it goes along.
+
+TODO
+    test.pl
+BUGS
+    None known so far. If you find any bugs or oddities, please do inform
+    the author.
+
+AUTHOR
+    Marcel Grünauer, <marcel@codewerk.com>
+
+COPYRIGHT
+    Copyright 2001 Marcel Grünauer. All rights reserved.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+SEE ALSO
+    perl(1), GraphViz(3pm).
+
